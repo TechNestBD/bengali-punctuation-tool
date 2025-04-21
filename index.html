@@ -1,19 +1,70 @@
-<script>
-  function addPunctuation() {
-    let text = document.getElementById('inputText').value.trim();
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>বাংলা বিরাম চিহ্ন টুল</title>
+  <style>
+    body {
+      font-family: Kalpurush, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #008744;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 25px;
+      background: #f2f2f2;
+      padding: 15px;
+      font-size: 20px;
+      white-space: pre-wrap;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
 
-    // একাধিক স্পেস একটিতে রূপান্তর
-    text = text.replace(/\s+/g, ' ');
+  <h2>বাংলা লেখাকে সাজিয়ে ফেলুন! ✨</h2>
+  
+  <textarea id="inputText" placeholder="এখানে বাংলা লেখা দিন..."></textarea>
+  <br>
+  <button onclick="addPunctuation()">ফলাফল</button>
+  
+  <div class="output" id="outputText"></div>
 
-    // বিরামচিহ্নের পর নতুন লাইন
-    text = text.replace(/([।!?])/g, '$1\n');
+  <script>
+    function addPunctuation() {
+      let text = document.getElementById('inputText').value.trim();
 
-    // প্রতিটি লাইনের শুরু ও শেষে ফাঁকা স্পেস কেটে ফেলা
-    let lines = text.split('\n').map(line => line.trim());
+      // একাধিক স্পেস একটিতে রূপান্তর
+      text = text.replace(/\s+/g, ' ');
 
-    // ফাঁকা লাইন বাদ দিয়ে একসাথে করা
-    let output = lines.filter(line => line).join('\n');
+      // বিরামচিহ্নের পর নতুন লাইন
+      text = text.replace(/([।!?])/g, '$1\n');
 
-    document.getElementById('outputText').innerText = output;
-  }
-</script>
+      // প্রতিটি লাইনের শুরু ও শেষে ফাঁকা স্পেস কেটে ফেলা
+      let lines = text.split('\n').map(line => line.trim());
+
+      // ফাঁকা লাইন বাদ দিয়ে একসাথে করা
+      let output = lines.filter(line => line).join('\n');
+
+      document.getElementById('outputText').innerText = output;
+    }
+  </script>
+
+</body>
+</html>
