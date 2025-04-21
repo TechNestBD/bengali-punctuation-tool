@@ -1,13 +1,32 @@
 function addPunctuation(text) {
-  // সিম্পল লজিক — যেখানে নতুন লাইন বা স্পেস পাওয়া যায় সেখানে "।" বসিয়ে দেওয়া
-  return text
-    .replace(/([^\.\?\!।])\s+/g, "$1। ")
-    .replace(/।।+/g, "।") // ডাবল "।" সরানো
-    .trim();
+  const sentences = text
+    .replace(/([।?!])/g, "$1\n") // আগে থেকে থাকলে রাখে
+    .replace(/(\s+)/g, " ") // বাড়তি স্পেস বাদ দেয়
+    .trim()
+    .split(/[।?!\n]/);
+
+  const keywords = ["তবে", "কিন্তু", "তাই", "যদি", "যেহেতু", "কারণ", "অতএব"];
+  const questionWords = ["কি", "কেন", "কবে", "কে", "কোথায়", "কেমন", "কি করে", "কিভাবে", "কত"];
+
+  let result = "";
+  for (let line of sentences) {
+    line = line.trim();
+    if (line === "") continue;
+
+    if (questionWords.some(word => line.includes(word))) {
+      result += line + "? ";
+    } else if (keywords.some(word => line.includes(word))) {
+      result += line + ", ";
+    } else {
+      result += line + "। ";
+    }
+  }
+
+  return result.trim();
 }
 
-document.getElementById("punctuateButton").addEventListener("click", function () {
-  const input = document.getElementById("inputText").value;
-  const result = addPunctuation(input);
-  document.getElementById("output").innerText = result;
+document.getElementById("addPunctuationBtn").addEventListener("click", function () {
+  const inputText = document.getElementById("inputText").value;
+  const result = addPunctuation(inputText);
+  document.getElementById("output").textContent = result;
 });
