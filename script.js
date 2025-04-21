@@ -1,24 +1,34 @@
 function addPunctuation(text) {
-  const sentences = text
-    .replace(/([।?!])/g, "$1\n") // আগে থেকে থাকলে রাখে
-    .replace(/(\s+)/g, " ") // বাড়তি স্পেস বাদ দেয়
-    .trim()
-    .split(/[।?!\n]/);
-
-  const keywords = ["তবে", "কিন্তু", "তাই", "যদি", "যেহেতু", "কারণ", "অতএব"];
+  // বাড়তি স্পেস হটানো
+  text = text.replace(/\s+/g, " ").trim();
+  
+  // বাক্য ভাগ করা (স্পেস এবং শব্দের উপর ভিত্তি করে)
+  const sentences = text.split(/(?<=।|!|\?)\s*|(?<=\s)/).filter(s => s.trim() !== "");
+  
   const questionWords = ["কি", "কেন", "কবে", "কে", "কোথায়", "কেমন", "কি করে", "কিভাবে", "কত"];
-
+  const keywords = ["তবে", "কিন্তু", "তাই", "যদি", "যেহেতু", "কারণ", "অতএব"];
+  
   let result = "";
   for (let line of sentences) {
     line = line.trim();
     if (line === "") continue;
 
+    // কমা যোগ করা
+    let words = line.split(" ");
+    let sentenceWithComma = words
+      .map((word, index) => {
+        if (keywords.includes(word) && index > 0) {
+          return "," + word;
+        }
+        return word;
+      })
+      .join(" ");
+
+    // প্রশ্নবোধক বা দাঁড়ি যোগ করা
     if (questionWords.some(word => line.includes(word))) {
-      result += line + "? ";
-    } else if (keywords.some(word => line.includes(word))) {
-      result += line + ", ";
+      result += sentenceWithComma + "? ";
     } else {
-      result += line + "। ";
+      result += sentenceWithComma + "। ";
     }
   }
 
