@@ -4,10 +4,36 @@
   <meta charset="UTF-8">
   <title>বাংলা বিরাম চিহ্ন টুল</title>
   <style>
-    body { font-family: Kalpurush, sans-serif; max-width: 600px; margin: 40px auto; text-align: center; }
-    textarea { width: 100%; height: 150px; padding: 10px; font-size: 18px; }
-    button { margin-top: 15px; padding: 10px 20px; font-size: 18px; background-color: #008744; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    .output { margin-top: 25px; background: #f2f2f2; padding: 15px; font-size: 20px; white-space: pre-wrap; border-radius: 6px; }
+    body {
+      font-family: Kalpurush, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #008744;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 25px;
+      background: #f2f2f2;
+      padding: 15px;
+      font-size: 20px;
+      white-space: pre-wrap;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
@@ -21,15 +47,39 @@
 
   <script>
     function addPunctuation() {
-      let text = document.getElementById('inputText').value;
+      let text = document.getElementById('inputText').value.trim();
 
-      // পাংচুয়েশনের লজিক
-      text = text.replace(/\?/g, '?\n');
-      text = text.replace(/!/g, '!\n');
-      text = text.replace(/(?:\.|\।)/g, '।\n');
-      text = text.replace(/\s+/g, ' ').trim();
+      // ভুল জায়গার . বা । বাদ দাও
+      text = text.replace(/[\.\।]+/g, '');
 
-      document.getElementById('outputText').innerText = text;
+      // শব্দ ধরে ধরে সাজাও
+      let words = text.split(/\s+/);
+      let result = '';
+      const questionWords = ['কী', 'কেন', 'কবে', 'কোন', 'কোথায়', 'কেমন', 'কার', 'কে', 'কি', 'কত'];
+
+      for (let i = 0; i < words.length; i++) {
+        result += words[i];
+
+        // শেষ শব্দ হলে কিছু যোগ করো না
+        if (i === words.length - 1) {
+          result += '।';
+          break;
+        }
+
+        // প্রশ্ন হলে ? দাও
+        if (questionWords.includes(words[i])) {
+          result += '? ';
+        } 
+        // কিন্তু, তবে, আর ইত্যাদির পর কমা
+        else if (['কিন্তু', 'তবে', 'যদিও', 'অথবা', 'আর'].includes(words[i])) {
+          result += ', ';
+        } 
+        else {
+          result += ' ';
+        }
+      }
+
+      document.getElementById('outputText').innerText = result;
     }
   </script>
 
