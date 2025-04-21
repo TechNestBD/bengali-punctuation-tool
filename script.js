@@ -1,11 +1,13 @@
-function addPunctuation() {
-  const input = document.getElementById("bengaliInput").value;
-  let punctuated = input;
-
-  // সাধারণ কিছু উদাহরণ দিয়ে দাড়ি, প্রশ্নবোধক, বিস্ময় চিহ্ন বসানো
-  punctuated = punctuated.replace(/(আমি|তুমি|সে|আমরা|তারা|আপনি)(?!,)/g, "$1,");
-  punctuated = punctuated.replace(/(কি|কেন|কবে|কোথায়|কে)(?!\?)/g, "$1?");
-  punctuated = punctuated.replace(/(বাহ|আরে|উফ)(?!!)/g, "$1!");
-
-  document.getElementById("output").value = punctuated;
+function addPunctuation(text) {
+  // সিম্পল লজিক — যেখানে নতুন লাইন বা স্পেস পাওয়া যায় সেখানে "।" বসিয়ে দেওয়া
+  return text
+    .replace(/([^\.\?\!।])\s+/g, "$1। ")
+    .replace(/।।+/g, "।") // ডাবল "।" সরানো
+    .trim();
 }
+
+document.getElementById("punctuateButton").addEventListener("click", function () {
+  const input = document.getElementById("inputText").value;
+  const result = addPunctuation(input);
+  document.getElementById("output").innerText = result;
+});
