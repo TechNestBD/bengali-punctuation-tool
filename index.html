@@ -1,17 +1,19 @@
-function addPunctuation() {
-  let text = document.getElementById('inputText').value.trim();
+<script>
+  function addPunctuation() {
+    let text = document.getElementById('inputText').value.trim();
 
-  // একাধিক স্পেস একটিতে রূপান্তর
-  text = text.replace(/\s+/g, ' ');
+    // একাধিক স্পেস একটিতে রূপান্তর
+    text = text.replace(/\s+/g, ' ');
 
-  // বিরামচিহ্নের পর নতুন লাইন
-  text = text.replace(/([।!?])/g, '$1\n');
+    // বিরামচিহ্নের পর নতুন লাইন
+    text = text.replace(/([।!?])/g, '$1\n');
 
-  // প্রতিটি লাইনের শুরু ও শেষে ফাঁকা স্পেস কেটে ফেলা
-  let lines = text.split('\n').map(line => line.trim());
+    // প্রতিটি লাইনের শুরু ও শেষে ফাঁকা স্পেস কেটে ফেলা
+    let lines = text.split('\n').map(line => line.trim());
 
-  // ফাঁকা লাইন বাদ দিয়ে একসাথে করা
-  let output = lines.filter(line => line).join('\n');
+    // ফাঁকা লাইন বাদ দিয়ে একসাথে করা
+    let output = lines.filter(line => line).join('\n');
 
-  document.getElementById('outputText').innerText = output;
-}
+    document.getElementById('outputText').innerText = output;
+  }
+</script>
