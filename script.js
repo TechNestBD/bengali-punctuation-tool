@@ -1,28 +1,32 @@
 function addPunctuation(text) {
-    const questionWords = ["কেন", "কি", "কী", "কে", "কবে", "কেমন", "কোথায়", "কোন"];
-    const shortPauses = ["তবে", "যদিও", "তাই", "তাতে", "অতএব", "যার", "যে", "যারপরনাই"];
-    
-    let words = text.trim().split(/\s+/);
-    let result = "";
-    
-    for (let i = 0; i < words.length; i++) {
-        let word = words[i];
-        let nextWord = words[i + 1] || "";
+  const sentences = text
+    .replace(/([।?!])/g, "$1\n") // আগে থেকে থাকলে রাখে
+    .replace(/(\s+)/g, " ") // বাড়তি স্পেস বাদ দেয়
+    .trim()
+    .split(/[।?!\n]/);
 
-        if (questionWords.includes(word)) {
-            result += word + "? ";
-        } else if (shortPauses.includes(word)) {
-            result += word + ", ";
-        } else {
-            result += word + "। ";
-        }
+  const keywords = ["তবে", "কিন্তু", "তাই", "যদি", "যেহেতু", "কারণ", "অতএব"];
+  const questionWords = ["কি", "কেন", "কবে", "কে", "কোথায়", "কেমন", "কি করে", "কিভাবে", "কত"];
+
+  let result = "";
+  for (let line of sentences) {
+    line = line.trim();
+    if (line === "") continue;
+
+    if (questionWords.some(word => line.includes(word))) {
+      result += line + "? ";
+    } else if (keywords.some(word => line.includes(word))) {
+      result += line + ", ";
+    } else {
+      result += line + "। ";
     }
+  }
 
-    return result.trim();
+  return result.trim();
 }
 
 document.getElementById("addPunctuationBtn").addEventListener("click", function () {
-    let inputText = document.getElementById("inputText").value;
-    let outputText = addPunctuation(inputText);
-    document.getElementById("output").innerText = outputText;
+  const inputText = document.getElementById("inputText").value;
+  const result = addPunctuation(inputText);
+  document.getElementById("output").textContent = result;
 });
