@@ -4,81 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>বাংলা বিরাম চিহ্ন টুল</title>
-  <style>
-    body {
-      font-family: 'SolaimanLipi', sans-serif;
-      background-color: #f5f5f5;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    textarea {
-      width: 90%;
-      height: 150px;
-      margin-top: 20px;
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #00b894;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #019875;
-    }
-
-    #output {
-      margin-top: 20px;
-      font-size: 18px;
-      white-space: pre-wrap;
-      color: #2d3436;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <h1>বাংলা বিরাম চিহ্ন টুল</h1>
   <p>আসসালামু আলাইকুম! নিচে বাংলা লিখুন এবং "বিরাম চিহ্ন যোগ করুন" বাটনে ক্লিক করুন।</p>
 
   <textarea id="inputText" placeholder="এখানে বাংলা লিখুন..."></textarea><br>
-  <button onclick="addPunctuation()">বিরাম চিহ্ন যোগ করুন</button>
+  <button id="addPunctuationBtn">বিরাম চিহ্ন যোগ করুন</button>
 
   <div id="output"></div>
 
-  <script>
-    function addPunctuation() {
-      const input = document.getElementById("inputText").value;
-      if (!input.trim()) {
-        document.getElementById("output").innerText = "দয়া করে কিছু লিখুন।";
-        return;
-      }
-
-      // কিছু সাধারণ যুক্তির মাধ্যমে বিরাম চিহ্ন যোগ করা
-      let punctuated = input
-        .replace(/ কিন্তু /g, "। কিন্তু ")
-        .replace(/ এবং /g, "। এবং ")
-        .replace(/ তাহলে /g, "। তাহলে ")
-        .replace(/ তবে /g, "। তবে ")
-        .replace(/ তারপর /g, "। তারপর ")
-        .replace(/ তাহলে /g, "। তাহলে ")
-        .replace(/ তাই /g, "। তাই ")
-        .replace(/ না /g, " না।")
-        .replace(/(\S[^।!?])$/g, "$1।"); // শেষ লাইনে না থাকলে একটা '।' যোগ করে
-
-      document.getElementById("output").innerText = punctuated;
-    }
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
