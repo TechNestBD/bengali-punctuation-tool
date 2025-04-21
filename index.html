@@ -2,17 +2,22 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>বাংলা বিরাম চিহ্ন টুল</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>বাংলা বিরাম চিহ্ন টুল</h1>
-    <textarea id="inputText" placeholder="বাংলা লেখা পেস্ট করুন..."></textarea>
-    <button onclick="addPunctuation()">বিরাম চিহ্ন যোগ করুন</button>
-    <textarea id="outputText" placeholder="ফলাফল এখানে দেখাবে..."></textarea>
+    <p>আসসালামু আলাইকুম! আপনি নিচে বাংলা লেখুন এবং "বিরাম চিহ্ন যোগ করুন" বাটনে ক্লিক করুন।</p>
+    
+    <textarea id="inputText" placeholder="এখানে বাংলা লিখুন..."></textarea>
+    <button id="punctuateButton">বিরাম চিহ্ন যোগ করুন</button>
+
+    <h2>ফলাফল:</h2>
+    <div id="output"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
